@@ -45,7 +45,7 @@
         map.locate({ setView: true, maxZoom: 16 });
 
         function onLocationFound(e) {
-            var user_position = turf.point(e.latlng)
+            var user_position = turf.point([e.latitude, e.longitude]);
             var nearest_invader = turf.nearestPoint(user_position, invaders);
             var distance = turf.distance(user_position, nearest_invader, { units: "meters" });
             console.log(distance);
