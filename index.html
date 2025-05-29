@@ -31,7 +31,7 @@
 
     <script>
         var invaders = turf.featureCollection([
-            turf.point([28.973865, 41.011122]),
+            turf.point([48.853131, 2.377869]),
             turf.point([28.948459, 41.024204]),
             turf.point([28.938674, 41.013324]),
         ]);
@@ -45,10 +45,13 @@
         map.locate({ setView: true, maxZoom: 16 });
 
         function onLocationFound(e) {
+            console.log("User position " + e.latlng);
             var user_position = turf.point([e.latitude, e.longitude]);
             var nearest_invader = turf.nearestPoint(user_position, invaders);
             var distance = turf.distance(user_position, nearest_invader, { units: "meters" });
-            console.log(distance);
+            if (distance < 200) {
+                window.alert("Ouvre les yeux !");
+            }
         }
 
         map.on('locationfound', onLocationFound);
