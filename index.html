@@ -43,6 +43,15 @@
             }
         }
 
+        function convertToNumber(number_string) {
+            if (typeof number_string == "number") return number_string;
+            else {
+                var test = Number(number_string);
+                if (!isNaN(test)) return test;
+                else return Number(number_string.replace(",", "."));
+            }
+        }
+
         map = L.map('map').setView([50.75, 2.25], 13);
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
@@ -56,7 +65,7 @@
                 console.log(json);
                 var invader_points = [];
                 json.forEach(element => {
-                    invader_points.push(turf.point([Number(element.lat), Number(element.lng)]));
+                    invader_points.push(turf.point([convertToNumber(element.lat), convertToNumber(element.lng)]));
                 });
                 invaders = turf.featureCollection(invader_points);
 
