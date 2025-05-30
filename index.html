@@ -33,7 +33,7 @@
         var invaders;
         var map;
         var user_marker;
-        var distance_to_detect_invader = 200;
+        var distance_to_detect_invader_meters = 200;
 
         function onLocationFound(e) {
             // User position
@@ -43,7 +43,7 @@
 
             // Find close invaders
             var user_position = turf.point([e.latitude, e.longitude]);
-            var user_circle = turf.lineToPolygon(turf.lineArc(user_position, distance_to_detect_invader, 0, 360));
+            var user_circle = turf.lineToPolygon(turf.lineArc(user_position, distance_to_detect_invader_meters / 1000.0, 0, 360, { "units": "kilometers" }));
             var invaders_within = turf.pointsWithinPolygon(invaders, user_circle);
             if (invaders_within.features.length >= 1) {
                 window.alert("Ouvre les yeux !" + (invaders_within.features.length > 1 ? (" x" + invaders_within.features.length) : ""));
