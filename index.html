@@ -32,13 +32,20 @@
     <script>
         var invaders;
         var map;
+        var user_marker;
+        var distance_to_detect_invader = 200;
 
         function onLocationFound(e) {
+            // User position
             console.log("User position " + e.latlng);
+            user_marker = L.Marker([e.latitude, e.longitude]);
+            user_marker.addTo(map);
+
+            // Find close invaders
             var user_position = turf.point([e.latitude, e.longitude]);
             var nearest_invader = turf.nearestPoint(user_position, invaders);
             var distance = turf.distance(user_position, nearest_invader, { units: "meters" });
-            if (distance < 200) {
+            if (distance < distance_to_detect_invader) {
                 window.alert("Ouvre les yeux !");
             }
         }
