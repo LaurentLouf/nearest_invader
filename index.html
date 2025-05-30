@@ -43,6 +43,9 @@
 
             // Find close invaders
             var user_position = turf.point([e.latitude, e.longitude]);
+            var user_circle = turf.lineArc(user_position, distance_to_detect_invader, 0, 360);
+            var invaders_within = turf.pointsWithinPolygon(invaders, user_circle);
+
             var nearest_invader = turf.nearestPoint(user_position, invaders);
             var distance = turf.distance(user_position, nearest_invader, { units: "meters" });
             if (distance < distance_to_detect_invader) {
