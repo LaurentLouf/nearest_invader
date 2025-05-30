@@ -30,6 +30,9 @@
     <div id="map"></div>
 
     <script>
+        var invaders = turf.featureCollection();
+        var map;
+
         function onLocationFound(e) {
             console.log("User position " + e.latlng);
             var user_position = turf.point([e.latitude, e.longitude]);
@@ -40,28 +43,23 @@
             }
         }
 
-        var invaders = turf.featureCollection();
+        map = L.map('map').setView([50.75, 2.25], 13);
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: ' <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+        map.on('locationfound', onLocationFound);
+
         fetch('https://raw.githubusercontent.com/goguelnikov/SpaceInvaders/refs/heads/main/world_space_invaders_V01.json')
             .then((response) => response.json())
             .then((json) => {
                 console.log(json);
-
-                var invaders = turf.featureCollection([
-                    turf.point([48.853131, 2.377869]),
-                    turf.point([28.948459, 41.024204]),
-                    turf.point([28.938674, 41.013324]),
-                ]);
-
-                var map = L.map('map').setView([50.75, 2.25], 13);
-                L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    maxZoom: 19,
-                    attribution: ' <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-                }).addTo(map);
+                json.forEach(element => {
+                    invaders.features.push(turf.point([element.lat, element.lng]));
+                });
 
                 // Locate the user on opening of the app
                 map.locate({ setView: true, maxZoom: 16 });
-                map.on('locationfound', onLocationFound);
-
             });
 
 
