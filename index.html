@@ -38,7 +38,7 @@
         function onLocationFound(e) {
             // User position
             console.log("User position " + e.latlng);
-            user_marker = L.Marker([e.latitude, e.longitude]);
+            user_marker = L.marker([e.latitude, e.longitude]);
             user_marker.addTo(map);
 
             // Find close invaders
