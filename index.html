@@ -30,7 +30,7 @@
     <div id="map"></div>
 
     <script>
-        var invaders = turf.featureCollection();
+        var invaders;
         var map;
 
         function onLocationFound(e) {
@@ -54,9 +54,11 @@
             .then((response) => response.json())
             .then((json) => {
                 console.log(json);
+                var invader_points = [];
                 json.forEach(element => {
-                    invaders.features.push(turf.point([element.lat, element.lng]));
+                    invaders_points.push(turf.point([element.lat, element.lng]));
                 });
+                invaders = turf.featureCollection(invader_points);
 
                 // Locate the user on opening of the app
                 map.locate({ setView: true, maxZoom: 16 });
