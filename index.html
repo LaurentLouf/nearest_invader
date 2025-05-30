@@ -56,7 +56,7 @@
                 console.log(json);
                 var invader_points = [];
                 json.forEach(element => {
-                    invaders_points.push(turf.point([element.lat, element.lng]));
+                    invader_points.push(turf.point([element.lat, element.lng]));
                 });
                 invaders = turf.featureCollection(invader_points);
 
